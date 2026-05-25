@@ -25,10 +25,10 @@ This commands includes
 <BR>
 • Other IP Commands e.g. show ip route etc.
 <BR>
-## Program:
 
+## Program:
 server.py
-import socket
+```import socket
 import os
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -46,19 +46,23 @@ print("Connected to:", addr)
 
 while True:
     data = conn.recv(1024).decode()
+
     if not data:
         break
+
     print("Command received:", data)
+
     result = os.popen(data).read()
+
     if result == "":
         result = "Command executed but no output"
+
     conn.send(result.encode())
 
 conn.close()
 server.close()
 
 client.py
-
 import socket
 
 client = socket.socket()
@@ -67,23 +71,28 @@ client.connect(("127.0.0.1", 8000))
 print("Connected to server")
 
 while True:
+
     print("\nAvailable Commands:")
     print("1. ping google.com")
     print("2. tracert google.com")
     print("3. nslookup google.com")
     print("4. netstat")
     print("5. exit")
-    cmd = input("Enter network command: "
+
+    cmd = input("Enter network command: ")
+
     if cmd.lower() == "exit":
         break
+
     client.send(cmd.encode())
+
     result = client.recv(4096).decode()
+
     print("\nOutput:\n")
     print(result)
 
 client.close()
-
-
+```
 ## Output
 
 <img width="1919" height="1199" alt="Screenshot 2026-05-25 115731" src="https://github.com/user-attachments/assets/dc759ab8-a000-457a-a117-3c6ad8f9150a" />
